@@ -26,7 +26,7 @@
 
 <!-- Calendar Page JS -->
 <script src="assets/js/app-calendar-events.js"></script>
-<script src="assets/js/app-calendar.js"></script>
+<!-- <script src="assets/js/app-calendar.js"></script> -->
 
 <!-- Dashboard Page JS -->
 <script src="assets/vendor/libs/apex-charts/apexcharts.js"></script>
