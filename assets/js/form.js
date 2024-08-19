@@ -35,7 +35,7 @@ function buildFormData() {
 }
 
 $("#deleteEventBtn").on("click", function(e) {
-    var eventId = $("#eventId").val(); 
+    var eventId = window.event_id;
     if (!eventId) {
         alert("Event ID is required for deletion.");
         return;
