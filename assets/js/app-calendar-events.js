@@ -20,6 +20,7 @@ function fetchEvents() {
         url: "server/event.php",
         method: "GET",
         dataType: "json",
+        async: false, // If window.events is undefined when app-calendar.js runs, the calendar won't load. Make AJAX synchronous as a quick fix
         success: function(response) {
             console.log("Raw response:", response);
             try {
