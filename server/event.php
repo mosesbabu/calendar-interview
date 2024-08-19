@@ -1,6 +1,11 @@
 <?php
 
-require_once 'config/db.php';  // Include the database connection
+
+
+// Absolute path to db.php
+require_once 'C:/xampp/htdocs/calendar-interview/config/db.php';
+
+// The rest of your event.php logic goes here
 
 // Get the request method
 $method = $_SERVER['REQUEST_METHOD'];
@@ -30,25 +35,31 @@ switch ($method) {
         echo json_encode(["success" => false, "message" => "Invalid request method."]);
         break;
 }
+error_log(file_get_contents("php://input"));
+error_log(print_r($data, true));
 
 // Function to create a new event (POST)
 function createEvent($pdo) {
-    $data = json_decode(file_get_contents("php://input"), true);
+    // Use $_POST to access the form data sent via AJAX
+    $data = $_POST;
 
-    $title = $data['title'];
-    $label = $data['label'];
-    $start_date = $data['start_date'];
-    $end_date = $data['end_date'];
-    $all_day = isset($data['all_day']) && $data['all_day'] ? 1 : 0;
-    $url = $data['url'];
-    $guests = implode(',', $data['guests']);
-    $location = $data['location'];
-    $description = $data['description'];
+    // Ensure all fields are properly retrieved
+    $title = $data['eventTitle'] ?? null;
+    $label = $data['eventLabel'] ?? null;
+    $start_date = $data['eventStartDate'] ?? null;
+    $end_date = $data['eventEndDate'] ?? null;
+    $all_day = isset($data['allDaySwitch']) && $data['allDaySwitch'] === 'on' ? 1 : 0;
+    $url = $data['eventURL'] ?? null;
+    $guests = isset($data['eventGuests']) && is_array($data['eventGuests']) ? implode(',', $data['eventGuests']) : '';
+    $location = $data['eventLocation'] ?? null;
+    $description = $data['eventDescription'] ?? null;
 
+    // Insert into the database
     $sql = "INSERT INTO events (title, label, start_date, end_date, all_day, url, guests, location, description)
             VALUES (:title, :label, :start_date, :end_date, :all_day, :url, :guests, :location, :description)";
 
     $stmt = $pdo->prepare($sql);
+
     if ($stmt->execute([
         ':title' => $title,
         ':label' => $label,
@@ -60,11 +71,12 @@ function createEvent($pdo) {
         ':location' => $location,
         ':description' => $description
     ])) {
-        echo json_encode(["success" => true, "message" => "Event created successfully."]);
+        echo json_encode(["success" => true, "message" => "Event created successfully!"]);
     } else {
-        echo json_encode(["success" => false, "message" => "Failed to create event."]);
+        echo json_encode(["success" => false, "message" => "Failed to create event!"]);
     }
 }
+
 
 // Function to fetch all events (GET)
 function fetchEvents($pdo) {

@@ -1,5 +1,6 @@
 $("#addEventBtn").on("click", function(e) {
     var formData = buildFormData();
+    console.log("Form data being sent:", formData);
     $.ajax("server/event.php", {
         method: "POST",
         data: formData
