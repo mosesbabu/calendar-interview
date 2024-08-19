@@ -152,7 +152,7 @@ require_once 'header.php';
                                         Cancel
                                     </button>
                                 </div>
-                                <button class="btn btn-label-danger btn-delete-event d-none">
+                                <button class="btn btn-label-danger btn-delete-event d-none" id="deleteEventBtn">
                                     Delete
                                 </button>
                             </div>

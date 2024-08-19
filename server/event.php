@@ -40,10 +40,10 @@ error_log(print_r($data, true));
 
 // Function to create a new event (POST)
 function createEvent($pdo) {
-    // Use $_POST to access the form data sent via AJAX
+
     $data = $_POST;
 
-    // Ensure all fields are properly retrieved
+   
     $title = $data['eventTitle'] ?? null;
     $label = $data['eventLabel'] ?? null;
     $start_date = $data['eventStartDate'] ?? null;
@@ -88,16 +88,16 @@ function fetchEvents($pdo) {
 
 // Function to update an event (PUT)
 function updateEvent($pdo, $data) {
-    $id = $data['id'];
-    $title = $data['title'];
-    $label = $data['label'];
-    $start_date = $data['start_date'];
-    $end_date = $data['end_date'];
-    $all_day = isset($data['all_day']) && $data['all_day'] ? 1 : 0;
-    $url = $data['url'];
-    $guests = implode(',', $data['guests']);
-    $location = $data['location'];
-    $description = $data['description'];
+    $id = $data['id'] ?? null;
+    $title = $data['eventTitle'] ?? null;
+    $label = $data['eventLabel'] ?? null;
+    $start_date = $data['eventStartDate'] ?? null;
+    $end_date = $data['eventEndDate'] ?? null;
+    $all_day = isset($data['allDaySwitch']) && $data['allDaySwitch'] === 'on' ? 1 : 0;
+    $url = $data['eventURL'] ?? null;
+    $guests = isset($data['eventGuests']) && is_array($data['eventGuests']) ? implode(',', $data['eventGuests']) : '';
+    $location = $data['eventLocation'] ?? null;
+    $description = $data['eventDescription'] ?? null;
 
     $sql = "UPDATE events SET 
             title = :title, label = :label, start_date = :start_date, end_date = :end_date,
@@ -106,6 +106,7 @@ function updateEvent($pdo, $data) {
 
     $stmt = $pdo->prepare($sql);
     if ($stmt->execute([
+        
         ':title' => $title,
         ':label' => $label,
         ':start_date' => $start_date,

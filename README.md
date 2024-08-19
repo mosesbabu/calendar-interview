@@ -42,24 +42,100 @@ calendar-crud-operations/
 ├── README.md
 
 ```
+# 📖 API Documentation
 
-## 📖 API Documentation
-
-### Add Event
-- **URL**: ``
+## Create Event
+- **URL**: `http://localhost/server/event.php`
 - **Method**: `POST`
+- **Description**: Creates a new event in the database.
+- **Request Body**:
+  - `eventTitle` (string, required): The title of the event.
+  - `eventLabel` (string, required): The label/category of the event.
+  - `eventStartDate` (string, required): The start date and time of the event.
+  - `eventEndDate` (string, required): The end date and time of the event.
+  - `allDaySwitch` (string, optional): Indicates if the event is an all-day event (`on` or `off`).
+  - `eventURL` (string, optional): URL related to the event.
+  - `eventLocation` (string, optional): Location of the event.
+  - `eventGuests` (array of strings, optional): List of guests.
+  - `eventDescription` (string, optional): Description of the event.
+- **Success Response**:
+  - **Code**: `200 OK`
+  - **Content**:
+    ```json
+    {
+      "success": true,
+      "message": "Event created successfully."
+    }
+    ```
+- **Error Response**:
+  - **Code**: `400 Bad Request`
+  - **Content**:
+    ```json
+    {
+      "success": false,
+      "message": "Failed to create event."
+    }
+    ```
 
-### Fetch Events
-- **URL**: ``
-- **Method**: `GET`
-
-### Update Event
-- **URL**: ``
+## Update Event
+- **URL**: `http://localhost/server/event.php`
 - **Method**: `PUT`
+- **Description**: Updates an existing event in the database.
+- **Request Body**:
+  - `id` (integer, required): The unique identifier of the event to be updated.
+  - `eventTitle` (string, optional): The new title of the event.
+  - `eventLabel` (string, optional): The new label/category of the event.
+  - `eventStartDate` (string, optional): The new start date and time of the event.
+  - `eventEndDate` (string, optional): The new end date and time of the event.
+  - `allDaySwitch` (string, optional): Indicates if the event is an all-day event (`on` or `off`).
+  - `eventURL` (string, optional): New URL related to the event.
+  - `eventLocation` (string, optional): New location of the event.
+  - `eventGuests` (array of strings, optional): New list of guests.
+  - `eventDescription` (string, optional): New description of the event.
+- **Success Response**:
+  - **Code**: `200 OK`
+  - **Content**:
+    ```json
+    {
+      "success": true,
+      "message": "Event updated successfully."
+    }
+    ```
+- **Error Response**:
+  - **Code**: `400 Bad Request`
+  - **Content**:
+    ```json
+    {
+      "success": false,
+      "message": "Failed to update event."
+    }
+    ```
 
-### Delete Event
-- **URL**: ``
+## Delete Event
+- **URL**: `http://localhost/server/event.php`
 - **Method**: `DELETE`
+- **Description**: Deletes an existing event from the database.
+- **Request Body**:
+  - `id` (integer, required): The unique identifier of the event to be deleted.
+- **Success Response**:
+  - **Code**: `200 OK`
+  - **Content**:
+    ```json
+    {
+      "success": true,
+      "message": "Event deleted successfully."
+    }
+    ```
+- **Error Response**:
+  - **Code**: `400 Bad Request`
+  - **Content**:
+    ```json
+    {
+      "success": false,
+      "message": "Failed to delete event."
+    }
+    ```
+
 
 ## 💡 Tips for Success
 
