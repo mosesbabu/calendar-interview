@@ -27,6 +27,10 @@ function buildFormData() {
 
     formData[textarea.attr("id")] = textarea.val();
 
+    if (window.event_id) {
+        formData.id = window.event_id;
+    }
+
     return formData;
 }
 
@@ -52,3 +56,32 @@ $("#deleteEventBtn").on("click", function(e) {
         }
     });
 });
+
+const bsOffcanvas = $('#addEventSidebar').on('shown.bs.offcanvas', event => {
+    window.event_id = null;
+    const formData = formatEvent(buildFormData());
+    const matches = window.events.filter(e => {
+        let { id, ...rest } = e;
+        return JSON.stringify(formData) === JSON.stringify(rest);
+    });
+
+    if (matches.length) {
+        window.event_id = matches[0].id;
+    }
+});
+
+function formatEvent(event) {
+    return {
+        url: event.eventURL,
+        title: event.eventTitle,
+        start: new Date(event.eventStartDate),
+        end: new Date(event.eventEndDate),
+        allDay: event.allDaySwitch === "on" ? true : false,
+        extendedProps: {
+            calendar: event.eventLabel || "",
+            guests: event.eventGuests.join(","),
+            location: event.eventLocation || "",
+            description: event.eventDescription || ""
+        }
+    };
+}
