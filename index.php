@@ -165,43 +165,5 @@ require_once 'header.php';
     </div>
 </div>
 <!-- / Content -->
-<script>
-        // Event listener for form submission
-        document.getElementById('eventForm').addEventListener('submit', function(event) {
-            event.preventDefault(); // Prevent default form submission
 
-            //  form data
-            const eventData = {
-                title: document.getElementById('eventTitle').value,
-                label: document.getElementById('eventLabel').value,
-                start_date: document.getElementById('eventStartDate').value,
-                end_date: document.getElementById('eventEndDate').value,
-                all_day: document.getElementById('allDaySwitch').checked,
-                url: document.getElementById('eventURL').value,
-                guests: Array.from(document.getElementById('eventGuests').selectedOptions).map(option => option.value),
-                location: document.getElementById('eventLocation').value,
-                description: document.getElementById('eventDescription').value
-            };
-
-            // Send data to the backend API
-            fetch('server/api.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(eventData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Event added successfully!');
-                    // Optionally: Reset the form or update the UI
-                    document.getElementById('eventForm').reset();
-                } else {
-                    alert('Error adding event: ' + data.message);
-                }
-            })
-            .catch(error => console.error('Error:', error));
-        });
-    </script>
 <?php require_once 'footer.php'; ?>
