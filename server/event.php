@@ -36,7 +36,7 @@ switch ($method) {
         break;
 }
 error_log(file_get_contents("php://input"));
-error_log(print_r($data, true));
+error_log(print_r($_DATA, true));
 
 // Function to create a new event (POST)
 function createEvent($pdo) {
@@ -80,6 +80,7 @@ function createEvent($pdo) {
 
 // Function to fetch all events (GET)
 function fetchEvents($pdo) {
+    header('Content-Type: application/json');
     $stmt = $pdo->query("SELECT * FROM events ORDER BY start_date ASC");
     $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
     
